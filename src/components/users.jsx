@@ -4,6 +4,28 @@ import api from "../api";
 const Users = () => {
   const [users, setUsers] = useState(api.users.fetchAll());
 
+  let arr = [
+    " человек тусанет с тобой сегодня",
+    " человека тусанет с тобой сегодня",
+    " человек тусанет с тобой сегодня",
+    "Никто с тобой не тусанет",
+  ];
+
+  const usersCount = (count) => {
+    if (count == 0) {
+      return arr[3];
+    }
+    if (count == 1 || count > 10) {
+      return count + arr[0];
+    }
+    if (count > 1 && count < 5) {
+      return count + arr[1];
+    }
+    if (count >= 5 && count <= 10) {
+      return count + arr[2];
+    }
+  };
+
   const handleDeleteElement = (elementId) => {
     setUsers(users.filter((user) => user._id !== elementId));
   };
@@ -18,9 +40,11 @@ const Users = () => {
 
   return (
     <>
-      <h1>
-        <span></span>
-      </h1>
+      <h2>
+        <span className={"badge " + (users.length > 0 ? "bg-primary" : "bg-danger")}>
+          {usersCount(users.length)}
+        </span>
+      </h2>
       <table className="table">
         <thead>
           <tr>
