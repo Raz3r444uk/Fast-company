@@ -6,14 +6,23 @@ import api from "./api";
 function App() {
   const [users, setUsers] = useState(api.users.fetchAll());
 
-  const handleDeleteElement = (elementId) => {
-    setUsers(users.filter((user) => user._id !== elementId));
+  const handleDeleteElement = (id) => {
+    setUsers(users.filter((user) => user._id !== id));
+  };
+
+  const handleChangeStatus = (id) => {
+    console.log(123);
   };
 
   return (
     <div>
-      <SearchStatus {...users} />
-      <Users {...users} />;
+      <SearchStatus length={users.length} />
+      <Users
+        users={users}
+        onDelete={handleDeleteElement}
+        status={false}
+        onChange={handleChangeStatus}
+      />
     </div>
   );
 }

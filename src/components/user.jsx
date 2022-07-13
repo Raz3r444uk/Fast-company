@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import Qualitie from "../components/qualitie";
 import Bookmark from "../components/bookmark";
 
-const User = (users) => {
+const User = ({ users, onDelete, status, onChange }) => {
   const nameSurname = "Имя";
   const quanity = "Качество";
   const proffesiion = "Профессия";
@@ -25,26 +25,25 @@ const User = (users) => {
           </tr>
         </thead>
         <tbody>
-          <tr key={users[0]._id}>
-            <td>{users[0].name}</td>
-            <td>
-              {users[0].qualities.map((el) => (
-                <span className={"badge m-1 bg-" + el.color} key={el._id}>
-                  {el.name}
-                </span>
-              ))}
-            </td>
-            <td>{users[0].profession.name}</td>
-            <td>{users[0].completedMeetings}</td>
-            <td>{users[0].rate + "/5"}</td>
-            <td>
-              <button
-                className="btn btn-danger" /* onClick={() => handleDeleteElement(user._id)} */
-              >
-                delete
-              </button>
-            </td>
-          </tr>
+          {users.map((user) => (
+            <tr key={user._id}>
+              <td>{user.name}</td>
+              <td>
+                <Qualitie user={user} />
+              </td>
+              <td>{user.profession.name}</td>
+              <td>{user.completedMeetings}</td>
+              <td>{user.rate} /5</td>
+              <td>
+                <Bookmark status={status} onChange={onChange} />
+              </td>
+              <td>
+                <button className="btn btn-danger " onClick={() => onDelete(user._id)}>
+                  delete
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </>
