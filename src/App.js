@@ -10,18 +10,16 @@ function App() {
     setUsers(users.filter((user) => user._id !== id));
   };
 
-  const handleChangeStatus = (id) => {
-    console.log(123);
-  };
+  const hanleToggleBookmar = (id) => {};
 
   return (
     <div>
       <SearchStatus length={users.length} />
       <Users
         users={users}
-        onDelete={handleDeleteElement}
         status={false}
-        onChange={handleChangeStatus}
+        onDelete={handleDeleteElement}
+        onChange={hanleToggleBookmar}
       />
     </div>
   );

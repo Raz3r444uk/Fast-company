@@ -35,7 +35,9 @@ const User = ({ users, onDelete, status, onChange }) => {
               <td>{user.completedMeetings}</td>
               <td>{user.rate} /5</td>
               <td>
-                <Bookmark status={status} onChange={onChange} />
+                <button onClick={() => onChange(user._id)}>
+                  <i className={status === false ? "bi bi-bookmark" : "bi bi-bookmark-fill"}></i>
+                </button>
               </td>
               <td>
                 <button className="btn btn-danger " onClick={() => onDelete(user._id)}>

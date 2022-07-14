@@ -1,8 +1,5 @@
 import React from "react";
 
-const Bookmark = ({ status, handleChangeStatus }) => {
-  console.log(status);
-  console.log(handleChangeStatus);
-};
+const Bookmark = ({ status, handleChangeStatus }) => {};
 
 export default Bookmark;
