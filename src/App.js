@@ -10,17 +10,22 @@ function App() {
     setUsers(users.filter((user) => user._id !== id));
   };
 
-  const hanleToggleBookmar = (id) => {};
+  const hanleToggleBookmark = (id) => {
+    setUsers(
+      users.map((user) => {
+        if (user._id === id) {
+          user.bookmark = !user.bookmark;
+          return user;
+        }
+        return user;
+      })
+    );
+  };
 
   return (
     <div>
       <SearchStatus length={users.length} />
-      <Users
-        users={users}
-        status={false}
-        onDelete={handleDeleteElement}
-        onChange={hanleToggleBookmar}
-      />
+      <Users users={users} onDelete={handleDeleteElement} onChange={hanleToggleBookmark} />
     </div>
   );
 }

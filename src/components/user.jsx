@@ -2,7 +2,7 @@ import React from "react";
 import Qualitie from "../components/qualitie";
 import Bookmark from "../components/bookmark";
 
-const User = ({ users, onDelete, status, onChange }) => {
+const User = ({ users, onDelete, onChange }) => {
   const nameSurname = "Имя";
   const quanity = "Качество";
   const proffesiion = "Профессия";
@@ -34,11 +34,7 @@ const User = ({ users, onDelete, status, onChange }) => {
               <td>{user.profession.name}</td>
               <td>{user.completedMeetings}</td>
               <td>{user.rate} /5</td>
-              <td>
-                <button onClick={() => onChange(user._id)}>
-                  <i className={status === false ? "bi bi-bookmark" : "bi bi-bookmark-fill"}></i>
-                </button>
-              </td>
+              <Bookmark user={user} onChange={onChange} />
               <td>
                 <button className="btn btn-danger " onClick={() => onDelete(user._id)}>
                   delete
