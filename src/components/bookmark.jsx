@@ -1,15 +1,16 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const Bookmark = ({ user, onChange }) => {
-  return (
-    <>
-      <td>
-        <button onClick={() => onChange(user._id)}>
-          <i className={user.bookmark === false ? "bi bi-bookmark" : "bi bi-bookmark-fill"}></i>
+const BookMark = ({ status, ...rest }) => {
+    return (
+        <button {...rest}>
+            <i className={"bi bi-bookmark" + (status ? "-heart-fill" : "")}></i>
         </button>
-      </td>
-    </>
-  );
+    );
 };
 
-export default Bookmark;
+BookMark.propTypes = {
+    status: PropTypes.bool.isRequired
+};
+
+export default BookMark;

@@ -4,30 +4,32 @@ import SearchStatus from "./components/searchStatus";
 import api from "./api";
 
 function App() {
-  const [users, setUsers] = useState(api.users.fetchAll());
+    const [users, setUsers] = useState(api.users.fetchAll());
 
-  const handleDeleteElement = (id) => {
-    setUsers(users.filter((user) => user._id !== id));
-  };
-
-  const hanleToggleBookmark = (id) => {
-    setUsers(
-      users.map((user) => {
-        if (user._id === id) {
-          user.bookmark = !user.bookmark;
-          return user;
-        }
-        return user;
-      })
+    const handleDelete = (userId) => {
+        setUsers(users.filter((user) => user._id !== userId));
+    };
+    const handleToggleBookMark = (id) => {
+        setUsers(
+            users.map((user) => {
+                if (user._id === id) {
+                    return { ...user, bookmark: !user.bookmark };
+                }
+                return user;
+            })
+        );
+        console.log(id);
+    };
+    return (
+        <div>
+            <SearchStatus length={users.length} />
+            <Users
+                onDelete={handleDelete}
+                onToggleBookMark={handleToggleBookMark}
+                users={users}
+            />
+        </div>
     );
-  };
-
-  return (
-    <div>
-      <SearchStatus length={users.length} />
-      <Users users={users} onDelete={handleDeleteElement} onChange={hanleToggleBookmark} />
-    </div>
-  );
 }
 
 export default App;
