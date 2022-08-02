@@ -3,16 +3,10 @@ import Users from "./components/users";
 import api from "./api";
 
 function App() {
-    const [users, setUsers] = useState(api.users.fetchAll());
+    const [users, setUsers] = useState();
     const handleDelete = (userId) => {
         setUsers(users.filter((user) => user._id !== userId));
     };
-
-    useEffect(() => {
-        api.users.fetchAll().then((data) => {
-            setUsers(data);
-        });
-    }, []);
 
     const handleToggleBookMark = (id) => {
         setUsers(
@@ -24,14 +18,26 @@ function App() {
             })
         );
     };
+
+    useEffect(() => {
+        api.users.fetchAll().then((data) => {
+            setUsers(data);
+        });
+    }, []);
+
+
     return (
-        <div>
-            <Users
-                onDelete={handleDelete}
-                onToggleBookMark={handleToggleBookMark}
-                users={users}
-            />
-        </div>
+        <>
+            {users && (
+                <div>
+                    <Users
+                        users={users}
+                        onDelete={handleDelete}
+                        onToggleBookmark={handleToggleBookMark}
+                    />
+                </div>
+            )}
+        </>
     );
 }
 
