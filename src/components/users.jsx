@@ -11,11 +11,18 @@ const Users = ({ users: allUsers, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
+    const [users, setUsers] = useState();
     const pageSize = 4;
 
     useEffect(() => {
         api.professions.fetchAll().then((data) => {
             setProfessions(data);
+        });
+    }, []);
+
+    useEffect(() => {
+        api.users.fetchAll().then((data) => {
+            setUsers(data);
         });
     }, []);
 
@@ -32,12 +39,9 @@ const Users = ({ users: allUsers, ...rest }) => {
     };
 
     const filteredUsers = selectedProf
-        ? allUsers.filter(
-            (user) =>
-                JSON.stringify(user.profession) ===
-                JSON.stringify(selectedProf)
-        )
+        ? allUsers.filter((user) => user.profession === selectedProf)
         : allUsers;
+
     const count = filteredUsers.length;
 
     const usersCrop = paginate(filteredUsers, currentPage, pageSize);
@@ -51,6 +55,7 @@ const Users = ({ users: allUsers, ...rest }) => {
             {professions && (
                 <div className="d-flex flex-column flex-shrink p3">
                     <GroupList
+                        users={users}
                         items={professions}
                         onItemSelect={handleProfessionSelect}
                         valueProperty="_id"
@@ -99,6 +104,7 @@ const Users = ({ users: allUsers, ...rest }) => {
         </div>
     );
 };
+
 Users.propTypes = {
     users: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
