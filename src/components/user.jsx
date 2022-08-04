@@ -41,6 +41,7 @@ const User = ({
         </tr>
     );
 };
+
 User.propTypes = {
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
