@@ -17,7 +17,8 @@ const UserTable = ({
     const columns = {
         name: { path: "name", name: "Имя " },
         qualities: {
-            name: "Качества",
+            path: "",
+            name: "Качества ",
             component: (user) => <QualitiesList qualities={user.qualities} />
         },
         profession: { path: "profession.name", name: "Профессия " },
@@ -37,6 +38,7 @@ const UserTable = ({
             )
         },
         delete: {
+            path: "",
             component: (user) => (
                 <button
                     onClick={() => onDelete(user._id)}

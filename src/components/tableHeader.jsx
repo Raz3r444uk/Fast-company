@@ -15,15 +15,19 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
     };
 
     const caretToggle = (item) => {
-        return (
-            <i
-                className={
-                    selectedSort.order === "asc"
-                        ? "bi bi-caret-down-fill"
-                        : "bi bi-caret-up-fill"
-                }
-            ></i>
-        );
+        if (selectedSort.path === item) {
+            return (
+                <i
+                    className={
+                        selectedSort.order === "asc"
+                            ? "bi bi-caret-down-fill"
+                            : "bi bi-caret-up-fill"
+                    }
+                ></i>
+            );
+        } else {
+            return null;
+        }
     };
 
     return (
@@ -41,7 +45,7 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
                         scope="col"
                     >
                         {columns[colum].name}
-                        {caretToggle()}
+                        {caretToggle(columns[colum].path)}
                     </th>
                 ))}
             </tr>
@@ -52,8 +56,7 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
 TableHeader.propTypes = {
     onSort: PropTypes.func.isRequired,
     selectedSort: PropTypes.object.isRequired,
-    columns: PropTypes.object.isRequired,
-    caret: PropTypes.string
+    columns: PropTypes.object.isRequired
 };
 
 export default TableHeader;
