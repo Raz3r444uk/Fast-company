@@ -8,9 +8,22 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
                 ...selectedSort,
                 order: selectedSort.order === "asc" ? "desc" : "asc"
             });
+            caretToggle();
         } else {
             onSort({ path: item, order: "asc" });
         }
+    };
+
+    const caretToggle = (item) => {
+        return (
+            <i
+                className={
+                    selectedSort.order === "asc"
+                        ? "bi bi-caret-down-fill"
+                        : "bi bi-caret-up-fill"
+                }
+            ></i>
+        );
     };
 
     return (
@@ -28,6 +41,7 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
                         scope="col"
                     >
                         {columns[colum].name}
+                        {caretToggle()}
                     </th>
                 ))}
             </tr>
@@ -38,7 +52,8 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
 TableHeader.propTypes = {
     onSort: PropTypes.func.isRequired,
     selectedSort: PropTypes.object.isRequired,
-    columns: PropTypes.object.isRequired
+    columns: PropTypes.object.isRequired,
+    caret: PropTypes.string
 };
 
 export default TableHeader;
