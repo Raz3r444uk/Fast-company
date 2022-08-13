@@ -13,6 +13,7 @@ module.exports = {
     },
     plugins: ["react"],
     rules: {
+        skipBlankLines: 0,
         indent: ["error", 4],
         semi: [2, "always"],
         "no-multiple-empty-lines": ["error", { max: 2, maxEOF: 0 }],

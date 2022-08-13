@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { paginate } from "../utils/paginate";
-import Pagination from "./pagination";
+import Pagination from "../components/pagination";
 import api from "../api";
-import GroupList from "./groupList";
-import SearchStatus from "./searchStatus";
-import UserTable from "./usersTable";
+import GroupList from "../components/groupList";
+import SearchStatus from "../components/searchStatus";
+import UserTable from "../components/usersTable";
 import _ from "lodash";
 
-const Users = () => {
+const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
@@ -18,9 +18,11 @@ const Users = () => {
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
     }, []);
+
     const handleDelete = (userId) => {
         setUsers(users.filter((user) => user._id !== userId));
     };
+
     const handleToggleBookMark = (id) => {
         setUsers(
             users.map((user) => {
@@ -112,11 +114,17 @@ const Users = () => {
                 </div>
             </div>
         );
+    } else {
+        return (
+            <h1 className="d-flex align-items-center justify-content-center">
+                Loading...
+            </h1>
+        );
     }
-    return "Loading";
 };
-Users.propTypes = {
+
+UsersList.propTypes = {
     users: PropTypes.array
 };
 
-export default Users;
+export default UsersList;
