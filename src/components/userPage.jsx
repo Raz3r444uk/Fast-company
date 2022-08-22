@@ -22,12 +22,12 @@ const UserPage = ({ userId }) => {
                     >
                         <h1>{user.name}</h1>
                         <h3 className="m-1">
-                            Профессия: ${user.profession.name}
+                            Профессия: {user.profession.name}
                         </h3>
                         <div className="m-1">
-                            Всего встреч: ${user.completedMeetings}
+                            Всего встреч: {user.completedMeetings}
                         </div>
-                        <div className="m-1">Рейтинг: ${user.rate}</div>
+                        <div className="m-1">Рейтинг: {user.rate}</div>
                         <div>
                             <QualitiesList
                                 qualities={user.qualities}
