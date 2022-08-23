@@ -21,11 +21,24 @@ const Login = () => {
         email: {
             isRequred: {
                 message: `Поле е-мейл обязятально для заполнения!`
+            },
+            isEmail: {
+                message: `E-mail введен некорректно!`
             }
         },
         password: {
             isRequred: {
                 message: `Поле пароль обязятально для заполнения!`
+            },
+            isCapitallSymbol: {
+                message: `Пароль должен содержать хотя бы одну заглавную букву!`
+            },
+            isContainDigit: {
+                message: `Пароль должен содержать хотя бы одно число!`
+            },
+            min: {
+                message: `Минимальное количество симоволов - 8`,
+                value: 8
             }
         }
     };
@@ -36,6 +49,8 @@ const Login = () => {
         return Object.keys(errors).length !== 0;
     };
 
+    const isValid = Object.keys(errors).length !== 0;
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
@@ -44,30 +59,40 @@ const Login = () => {
     };
 
     return (
-        <form
-            className="d-flex justify-content-center "
-            onSubmit={handleSubmit}
-        >
-            <TextField
-                label="Электронная почта"
-                name="email"
-                value={data.email}
-                id="name"
-                onChange={handleChange}
-                error={errors.email}
-            />
+        <div className="container mt-5">
+            <div className="row">
+                <div className="col-md-6 offset-md-3 shadow p-4">
+                    <h3 className="mb-4">LOGIN:</h3>
+                    <form onSubmit={handleSubmit}>
+                        <TextField
+                            label="Электронная почта"
+                            name="email"
+                            value={data.email}
+                            id="name"
+                            onChange={handleChange}
+                            error={errors.email}
+                        />
 
-            <TextField
-                label="Пароль"
-                type="password"
-                name="password"
-                value={data.password}
-                id="password"
-                onChange={handleChange}
-                error={errors.password}
-            />
-            <button>Submit</button>
-        </form>
+                        <TextField
+                            label="Пароль"
+                            type="password"
+                            name="password"
+                            value={data.password}
+                            id="password"
+                            onChange={handleChange}
+                            error={errors.password}
+                        />
+                        <button
+                            type="submit"
+                            disabled={isValid}
+                            className="btn btn-primary w-100 mx-auto"
+                        >
+                            Submit
+                        </button>
+                    </form>{" "}
+                </div>
+            </div>
+        </div>
     );
 };
 
