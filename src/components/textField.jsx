@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const TextField = ({ label, type, name, value, onChange, error }) => {
+const TextField = ({
+    label,
+    type,
+    name,
+    value,
+    onChange,
+    error,
+    placeholder
+}) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const getInputClasses = () => {
@@ -23,6 +31,7 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
                     value={value}
                     onChange={onChange}
                     name={name}
+                    placeholder={placeholder}
                 />
                 {type === "password" && (
                     <button
@@ -53,7 +62,8 @@ TextField.propTypes = {
     value: PropTypes.string,
     name: PropTypes.string,
     error: PropTypes.string,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    placeholder: PropTypes.string
 };
 
 export default TextField;

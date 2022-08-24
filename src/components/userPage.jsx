@@ -33,7 +33,6 @@ const UserPage = ({ userId }) => {
                                 qualities={user.qualities}
                             ></QualitiesList>
                         </div>
-
                         <Link
                             className="list-group-item list-group-item-primary w-20 px-5 p-3 text-center alighn-center fs-5"
                             to="/users"

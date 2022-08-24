@@ -6,6 +6,7 @@ import api from "../api";
 import GroupList from "../components/groupList";
 import SearchStatus from "../components/searchStatus";
 import UserTable from "../components/usersTable";
+import TextField from "./textField";
 import _ from "lodash";
 
 const UsersList = () => {
@@ -14,6 +15,9 @@ const UsersList = () => {
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
     const [users, setUsers] = useState();
+    const [searchName, setSearchName] = useState({ search: "" });
+    console.log(sortBy);
+
 
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
@@ -21,6 +25,13 @@ const UsersList = () => {
 
     const handleDelete = (userId) => {
         setUsers(users.filter((user) => user._id !== userId));
+    };
+
+    const handleSearch = ({ target }) => {
+        setSearchName((prevState) => ({
+            ...prevState,
+            [target.name]: target.value
+        }));
     };
 
     const handleToggleBookMark = (id) => {
@@ -92,8 +103,16 @@ const UsersList = () => {
                         </button>
                     </div>
                 )}
+
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
+                    <TextField
+                        placeholder="Search..."
+                        name="search"
+                        id="search"
+                        onChange={handleSearch}
+                        value={searchName.search}
+                    />
                     {count > 0 && (
                         <UserTable
                             users={usersCrop}
