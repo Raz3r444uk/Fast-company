@@ -15,9 +15,7 @@ const UsersList = () => {
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
     const [users, setUsers] = useState();
-    const [searchName, setSearchName] = useState({ search: "" });
-    console.log(sortBy);
-
+    const [searchName, setSearchName] = useState("");
 
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
@@ -25,13 +23,6 @@ const UsersList = () => {
 
     const handleDelete = (userId) => {
         setUsers(users.filter((user) => user._id !== userId));
-    };
-
-    const handleSearch = ({ target }) => {
-        setSearchName((prevState) => ({
-            ...prevState,
-            [target.name]: target.value
-        }));
     };
 
     const handleToggleBookMark = (id) => {
@@ -52,9 +43,10 @@ const UsersList = () => {
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [selectedProf]);
+    }, [selectedProf, searchName]);
 
     const handleProfessionSelect = (item) => {
+        setSearchName("");
         setSelectedProf(item);
     };
 
@@ -67,13 +59,22 @@ const UsersList = () => {
     };
 
     if (users) {
-        const filteredUsers = selectedProf
-            ? users.filter(
-                (user) =>
-                    JSON.stringify(user.profession) ===
-                    JSON.stringify(selectedProf)
-            )
-            : users;
+        let filteredUsers = "";
+        const searchRegExp = new RegExp(searchName, "g");
+
+        if (searchName) {
+            filteredUsers = users.filter((user) =>
+                searchRegExp.test(user.name)
+            );
+        } else {
+            filteredUsers = selectedProf
+                ? users.filter(
+                    (user) =>
+                        JSON.stringify(user.profession) ===
+                        JSON.stringify(selectedProf)
+                )
+                : users;
+        }
 
         const count = filteredUsers.length;
         const sortedUsers = _.orderBy(
@@ -82,8 +83,14 @@ const UsersList = () => {
             [sortBy.order]
         );
         const usersCrop = paginate(sortedUsers, currentPage, pageSize);
+
         const clearFilter = () => {
             setSelectedProf();
+        };
+
+        const handleSearch = (e) => {
+            clearFilter();
+            setSearchName(e.target.value);
         };
 
         return (
@@ -111,7 +118,7 @@ const UsersList = () => {
                         name="search"
                         id="search"
                         onChange={handleSearch}
-                        value={searchName.search}
+                        value={searchName}
                     />
                     {count > 0 && (
                         <UserTable
