@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { paginate } from "../utils/paginate";
-import Pagination from "../components/pagination";
-import api from "../api";
-import GroupList from "../components/groupList";
-import SearchStatus from "../components/searchStatus";
-import UserTable from "../components/usersTable";
-import TextField from "./textField";
+import { paginate } from "../../../utils/paginate";
+import Pagination from "../../common/pagination";
+import api from "../../../api";
+import GroupList from "../../common/groupList";
+import SearchStatus from "../../ui/searchStatus";
+import UserTable from "../../ui/usersTable";
+import TextField from "../../common/form/textField";
 import _ from "lodash";
 
-const UsersList = () => {
+const UsersListPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
@@ -19,6 +19,7 @@ const UsersList = () => {
 
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
+        api.professions.fetchAll().then((data) => setProfession(data));
     }, []);
 
     const handleDelete = (userId) => {
@@ -37,9 +38,9 @@ const UsersList = () => {
     };
     const pageSize = 6;
 
-    useEffect(() => {
-        api.professions.fetchAll().then((data) => setProfession(data));
-    }, []);
+    // useEffect(() => {
+    //     api.professions.fetchAll().then((data) => setProfession(data));
+    // }, []);
 
     useEffect(() => {
         setCurrentPage(1);
@@ -149,8 +150,8 @@ const UsersList = () => {
     }
 };
 
-UsersList.propTypes = {
+UsersListPage.propTypes = {
     users: PropTypes.array
 };
 
-export default UsersList;
+export default UsersListPage;

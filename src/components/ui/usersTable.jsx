@@ -1,10 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TableHeader from "./tableHeader";
-import TableBody from "./tableBody";
-import BookMark from "./bookmark";
-import QualitiesList from "./qualitiesList";
-import Table from "./table";
+import BookMark from "../common/bookmark";
+import Qualities from "./qualities";
+import Table from "../common/table";
 import { Link } from "react-router-dom";
 
 const UserTable = ({
@@ -19,12 +17,14 @@ const UserTable = ({
         name: {
             path: "name",
             name: "Имя ",
-            component: (user) => <Link to={`/users/${user._id}`}>{user.name}</Link>
+            component: (user) => (
+                <Link to={`/users/${user._id}`}>{user.name}</Link>
+            )
         },
         qualities: {
             path: "",
             name: "Качества ",
-            component: (user) => <QualitiesList qualities={user.qualities} />
+            component: (user) => <Qualities qualities={user.qualities} />
         },
         profession: { path: "profession.name", name: "Профессия " },
         completedMeetings: {
@@ -61,10 +61,7 @@ const UserTable = ({
             selectedSort={selectedSort}
             columns={columns}
             data={users}
-        >
-            <TableHeader {...{ onSort, selectedSort, columns }} />
-            <TableBody {...{ columns, data: users }} />
-        </Table>
+        ></Table>
     );
 };
 

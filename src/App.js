@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "./components/navBar";
+import Navbar from "./components/ui/navBar";
 import { Route, Switch } from "react-router-dom";
 import Users from "./layouts/users";
 import Login from "./layouts/login";
@@ -11,7 +11,7 @@ function App() {
             <Navbar />
             <Switch>
                 <Route path={"/"} exact component={Main} />
-                <Route path={"/login"} component={Login} />
+                <Route path={"/login/:type?"} component={Login} />
                 <Route path={"/users/:id?"} component={Users} />
             </Switch>
         </>
